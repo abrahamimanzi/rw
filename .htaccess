@@ -1,0 +1,48 @@
+# Turn Rewrite Engine On
+RewriteEngine on
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+#-----------------------------------------------#
+# Set Signup pages
+#-----------------------------------------------#
+
+ RewriteRule ^logout(/*)$ logout.php
+ 
+#-----------------------------------------------#
+
+#-----------------------------------------------#
+# Set Signup pages
+#-----------------------------------------------#
+
+ RewriteRule ^signup(/*)$ signup.php
+ 
+#-----------------------------------------------#
+
+
+#-----------------------------------------------#
+# Set Login pages
+#-----------------------------------------------#
+
+ RewriteRule ^login(/*)$ login.php?request=login
+ RewriteRule ^login/([a-z]+)(/*)$ login.php?request=$1
+ RewriteRule ^login/([a-z]+)/([a-z]+)(/*)$ login.php?request=$1&response=$2
+ RewriteRule ^login/([a-z]+)/([0-9A-Z]+)(/*)$ login.php?request=$1&response=$2
+ RewriteRule ^login/([a-z]+)/([0-9]+)/([0-9A-Z]+)(/*)$ login.php?request=$1&id=$2&code=$3
+ 
+#-----------------------------------------------#
+
+
+#-----------------------------------------------#
+# Set Global pages
+#-----------------------------------------------#
+
+ RewriteRule ^([a-z]+)(/*)$ index.php?request=$1
+ 
+#-----------------------------------------------#
+
+RewriteCond %{REQUEST_FILENAME}\.html -f
+RewriteRule ^(.*)$ $1.html
+RewriteCond %{REQUEST_FILENAME}\.php -f
+RewriteRule ^(.*)$ $1.php
