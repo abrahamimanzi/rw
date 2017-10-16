@@ -19,7 +19,7 @@
                     <button class="btn btn-block btn-lg bg-pink waves-effect" type="submit">RESET MY PASSWORD</button>
 
                     <div class="row m-t-20 m-b--5 align-center">
-                        <a href="<?=DN?>login">Sign In!</a>
+                        <a href="<?=DN?>login<?=PL?>">Sign In!</a>
                     </div>
                 </form>
             </div>

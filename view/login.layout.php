@@ -34,6 +34,7 @@
             if (isset($_GET['request']) && ($_SERVER['REQUEST_METHOD'] == 'GET') && (trim($_GET["request"])) && !empty($_GET["request"])) { 
 
                 $post_request = $_GET["request"];
+                
                 switch($post_request){
                         
                     case 'login':
@@ -42,9 +43,14 @@
                     case 'resetpassword':
                         include 'view/login/login-resetpassword.php';
                     break;
+                    case NULL:
+                        include 'view/login/login.php';
+                    break;
                     default:
                         include 'view/login/login.php';
                 }
+            } else{
+                include 'view/login/login.php';
             }
         ?>
     </div>

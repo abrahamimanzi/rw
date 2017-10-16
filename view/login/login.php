@@ -34,7 +34,7 @@
                             <!-- <a href="">Register Now!</a> -->
                         </div>
                         <div class="col-xs-6 align-right">
-                            <a href="<?=DN?>login/resetpassword">Forgot Password?</a>
+                            <a href="<?=DN?>login<?=PL?>?request=resetpassword">Forgot Password?</a>
                         </div>
                     </div>
                 </form>
