@@ -53,14 +53,17 @@ if (isset($_POST['request']) && ($_SERVER['REQUEST_METHOD'] == 'POST') && (trim(
 				$user_groups = $row[18];
 				// $user_ID = $row[0];
 				// echo $row[5];
-				if ($user_password === hash('sha256', $password. $salt)) {
+				if ($user_password === hash('sha256', $password)) {
+				// if ($user_password === hash('sha256', $password. $salt)) {
 					echo "User loged in";
 					$_SESSION["username"] = $username;
+					$_SESSION["user_email"] = $user_email;
 					$_SESSION["user_ID"] = $user_ID;
+					$_SESSION["user_groups"] = $user_groups;
 					$_SESSION['start'] = time(); // Taking now logged in time.
 					// Ending a session in 30 minutes from the starting time.
 					$_SESSION['expire'] = $_SESSION['start'] + (30 * 60);
-					//header("Location: ./"); /* Redirect browser */
+					header("Location: ./"); /* Redirect browser */
 					exit;
 				}else{
 					echo "login decline";
@@ -100,7 +103,7 @@ if (isset($_POST['request']) && ($_SERVER['REQUEST_METHOD'] == 'POST') && (trim(
 			echo $request;
 
 			$salt = mcrypt_create_iv(32);
-
+			// $salt = mysqli_real_escape_string($salt);
 			// make strong password
 			$length = 6; 
 			$add_dashes = false; 
@@ -114,7 +117,9 @@ if (isset($_POST['request']) && ($_SERVER['REQUEST_METHOD'] == 'POST') && (trim(
 			if(strpos($available_sets, 'd') !== false)
 				$sets[] = '23456789';
 			if(strpos($available_sets, 's') !== false)
-				$sets[] = '!@#$%&*?';
+				$sets[] = '#$&';
+			// if(strpos($available_sets, 's') !== false)
+				// $sets[] = '!@#$%&*?';
 			$all = '';
 			$password = '';
 			foreach($sets as $set){
@@ -141,12 +146,23 @@ if (isset($_POST['request']) && ($_SERVER['REQUEST_METHOD'] == 'POST') && (trim(
 			}
 			// End of strong password
 
-			$password = hash('sha256', $generate_password. $salt);
-
+			$password = hash('sha256', $generate_password);
+			// $password = hash('sha256', $generate_password. $salt);
+			$country_ID = 0;
+			$last_access = 0;
+			$account_session =0;
+			$state = 'Activated';
+			$date_insert = 0;
+			$recovery_string = 0;
+			$default_password = $generate_password;
+			$temp = 0;
+			$last_login = 0;
+			$profile = 0;
+			$salt = 0;
 			echo '<br>'.$password.'<br>'.$generate_password.'<br>'.$salt;
 
-			$sql = "INSERT INTO `app_users` (`firstname`, `phone`, `email`, `groups`, `password`, `salt`)
-			VALUES ('$name', '$phone', '$email', '$groups', '$password', '$salt')";
+			$sql = "INSERT INTO `app_users` (`username`,`firstname`, `phone`, `email`, `groups`, `password`, `salt`, `country_ID`, `last_access`, `last_login`, `account_session`, `profile`, `temp`, `date_insert`, `recovery_string`, `default_password`, `state`)
+			VALUES ('$name','$name', '$phone', '$email', '$groups', '$password', '$salt', '$country_ID', '$last_access', '$last_login', '$account_session', '$profile', '$temp', '$date_insert', '$recovery_string', '$default_password', '$state')";
 
 			// if (mysqli_query($conn, $sql)) {
 			//     echo "New record created successfully";
@@ -156,10 +172,10 @@ if (isset($_POST['request']) && ($_SERVER['REQUEST_METHOD'] == 'POST') && (trim(
 			if (!mysqli_query($conn,$sql)) {
 				die('Error: ' . mysqli_error($conn));
 			}
-			echo "1 record added";
+			// echo "1 record added";
 
 
-                $link = DN."/login/";
+                $link = DN."login.php";
 
                 $subject = "Your User Account for RICTA has been created";
 
@@ -277,7 +293,7 @@ if (isset($_POST['request']) && ($_SERVER['REQUEST_METHOD'] == 'POST') && (trim(
 	        // $validation = $validate->check($_SUBMIT, $validate_array);
 
 
-	            $admin_ID = 1;
+	            $admin_ID = $_SESSION["user_ID"];
 
 	            echo $amount;
 	            echo $currency;
@@ -327,7 +343,7 @@ if (isset($_POST['request']) && ($_SERVER['REQUEST_METHOD'] == 'POST') && (trim(
 	                'vpc_Currency' => $currency,
 	                'vpc_Locale' => 'en',
 	                'vpc_Version' => 1,
-	                'vpc_ReturnURL' => (DN.'/index.php?request=return-pay'),
+	                'vpc_ReturnURL' => (DN.'index.php?request=return-pay'),
 
 	                'vpc_SecureHashType' => 'SHA256'
 	            );

@@ -5,18 +5,18 @@
                     <img src="images/user.png" width="48" height="48" alt="User" />
                 </div>
                 <div class="info-container">
-                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">John Doe</div>
-                    <div class="email">john.doe@example.com</div>
+                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?=$_SESSION["username"];?></div>
+                    <div class="email"><?=$_SESSION["user_email"];?></div>
                     <div class="btn-group user-helper-dropdown">
                         <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
                         <ul class="dropdown-menu pull-right">
                             <li><a href="javascript:void(0);"><i class="material-icons">person</i>Profile</a></li>
-                            <li role="seperator" class="divider"></li>
+                            <!-- <li role="seperator" class="divider"></li>
                             <li><a href="javascript:void(0);"><i class="material-icons">group</i>Followers</a></li>
                             <li><a href="javascript:void(0);"><i class="material-icons">shopping_cart</i>Sales</a></li>
-                            <li><a href="javascript:void(0);"><i class="material-icons">favorite</i>Likes</a></li>
+                            <li><a href="javascript:void(0);"><i class="material-icons">favorite</i>Likes</a></li> -->
                             <li role="seperator" class="divider"></li>
-                            <li><a href="javascript:void(0);"><i class="material-icons">input</i>Sign Out</a></li>
+                            <li><a href="logout.php"><i class="material-icons">input</i>Sign Out</a></li>
                         </ul>
                     </div>
                 </div>
@@ -27,7 +27,7 @@
                 <ul class="list">
                     <li class="header">MAIN NAVIGATION</li>
                     <li class="active">
-                        <a href="index.html">
+                        <a href="<?=DN?>">
                             <i class="material-icons">home</i>
                             <span>Home</span>
                         </a>
@@ -40,14 +40,14 @@
                         <ul class="ml-menu">
                             <li>
                                 <a href="index.php?request=historical">
-                                    <span>historical</span>
+                                    <span>Historical</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="javascript:void(0);" class="menu-toggle">
-                                    <span>Infobox</span>
+                                <a href="index.php?request=pay">
+                                    <span>Make payment</span>
                                 </a>
-                                <ul class="ml-menu">
+                                <!-- <ul class="ml-menu">
                                     <li>
                                         <a href="pages/widgets/infobox/infobox-1.html">Infobox-1</a>
                                     </li>
@@ -63,7 +63,7 @@
                                     <li>
                                         <a href="pages/widgets/infobox/infobox-5.html">Infobox-5</a>
                                     </li>
-                                </ul>
+                                </ul> -->
                             </li>
                         </ul>
                     </li>
@@ -83,7 +83,7 @@
                         </ul>
                     </li>
                     <li class="header">LABELS</li>
-                    <li>
+                    <!-- <li>
                         <a href="index.php?request=pay">
                             <i class="material-icons col-light-blue">donut_large</i>
                             <span>Make payment</span>
@@ -94,7 +94,7 @@
                             <i class="material-icons col-amber">donut_large</i>
                             <span>Warning</span>
                         </a>
-                    </li>
+                    </li> -->
                     <li>
                         <a href="logout.php">
                             <i class="material-icons col-red">donut_large</i>
@@ -107,10 +107,10 @@
             <!-- Footer -->
             <div class="legal">
                 <div class="copyright">
-                    &copy; 2016 - 2017 <a href="javascript:void(0);">AdminBSB - Material Design</a>.
+                    &copy; 2017 <a href="javascript:void(0);">RICTA</a>.
                 </div>
                 <div class="version">
-                    <b>Version: </b> 1.0.5
+                    <b>Version: </b> 1.0
                 </div>
             </div>
             <!-- #Footer -->
