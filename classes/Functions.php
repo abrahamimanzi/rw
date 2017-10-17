@@ -1,4 +1,6 @@
 <?php
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 class Functions
 {
 	public static function json_enc($str){
@@ -236,15 +238,28 @@ class Functions
 			return false;
 		}
 	}
+
+
+		// use PHPMailer\PHPMailer\PHPMailer;
+		// use PHPMailer\PHPMailer\Exception;
 	
 	public static function smartMailer($contactDetails,$subject,$message_body,$message_alt){
         
+
+
+
         $from_email = @$contactDetails['from_email'];
         $from_names = @$contactDetails['from_names'];
         $to_email = @$contactDetails['to_email'];
         $cc_email = @$contactDetails['cc_email'];
         $cc_email_1 = @$contactDetails['cc_email_1'];
         $message_attach = @$contactDetails['attach'];
+
+
+		require 'PHPMailer/src/Exception.php';
+		require 'PHPMailer/src/PHPMailer.php';
+		// require 'classes/PHPMailer.php';
+		require 'PHPMailer/src/SMTP.php';
         
         try {
             $mail = new PHPMailer(true); //New instance, with exceptions enabled
@@ -267,13 +282,17 @@ class Functions
             
 //            if($_SERVER['HTTP_HOST'] != 'localhost' && $_SERVER['HTTP_HOST'] != '127.0.0.1'){
 
-                $mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for Gmail
+                // $mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for Gmail
+                $mail->SMTPSecure = 'tls'; // secure transfer enabled REQUIRED for Gmail
                 $mail->Host = "smtp.gmail.com";
-                $mail->Port = 465; // or 587
+                // $mail->Port = 465; // or 587
+                $mail->Port = 587; // or 587
                 // $mail->Username = "ginodevice@gmail.com";
                 // $mail->Password = "0787283185";
                 $mail->Username = "abrahamahoshakiye@gmail.com";
-                $mail->Password = "KADIBA@1212kadibra";
+                $mail->Password = "KADIBA@kadibra";
+                // $mail->Username = "registration@youthconnektafrica.org";
+                // $mail->Password = "registrationYCA17";
 
 //            }else{
 //                $mail->IsSendmail();

@@ -1,4 +1,11 @@
 <?php
+
+
+                use PHPMailer\PHPMailer\PHPMailer;
+				use PHPMailer\PHPMailer\Exception;
+
+
+
 // if (isset($_POST["request"]) && !empty($_POST["webToken"])) {   
 // $_POST['request'] = $_POST['request'];
 if (isset($_GET['request']) && ($_SERVER['REQUEST_METHOD'] == 'GET') && (trim($_GET["request"])) && !empty($_GET["request"])) { 
@@ -95,6 +102,7 @@ if (isset($_POST['request']) && ($_SERVER['REQUEST_METHOD'] == 'POST') && (trim(
 
 		break;
 		case 'user-new':
+			echo '<span style="display: none;">';
 			$request = mysqli_real_escape_string($conn, $_POST['request']);
 			$name = mysqli_real_escape_string($conn, $_POST['name']);
 			$email = mysqli_real_escape_string($conn, $_POST['email']);
@@ -251,27 +259,106 @@ if (isset($_POST['request']) && ($_SERVER['REQUEST_METHOD'] == 'POST') && (trim(
                     </body>
                 ';
 
-                $message_alt = $messageText_0.' '.$messageText_1.' '.$messageText_2;
+                $message_alt = $messageText_0.' '.$messageText_1.' '.$messageText_2.' '.$messageText_3.' '.$messageText_4.' '.$messageText_5 ;
 
                 $contactDetails['from_email'] = 'abrahamahoshakiye@gmail.com';
                 $contactDetails['from_names'] = 'RICTA';
                 $contactDetails['to_email'] = $email;
 
                 $contactDetails['attach'] = false;
+                require_once 'classes/Functions.php';
+                $email_status = Functions::smartMailer($contactDetails,$subject,$message_body,$message_alt);
 
-                // $email_status = Functions::smartMailer($contactDetails,$subject,$message_body,$message_alt);
+
+
+                /*
+				require 'PHPMailer/src/Exception.php';
+				require 'PHPMailer/src/PHPMailer.php';
+				require 'PHPMailer/src/SMTP.php';
+
+
+				$mail = new PHPMailer(true);                              // Passing `true` enables exceptions
+				try {
+				    //Server settings
+				    $mail->SMTPDebug = 2;                                 // Enable verbose debug output
+				    $mail->isSMTP();                                      // Set mailer to use SMTP
+				    $mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
+				    $mail->SMTPAuth = true;                               // Enable SMTP authentication
+				    $mail->Username = 'abrahamahoshakiye@gmail.com';                 // SMTP username
+				    $mail->Password = 'KADIBA@kadibra';                           // SMTP password
+				    $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
+				    $mail->Port = 587;                                    // TCP port to connect to
+
+				    //Recipients
+				    $mail->setFrom('abrahamahoshakiye@gmail.com', 'RICTA');
+				    $mail->addAddress('kadibra2@gmail.com', 'Joe User');     // Add a recipient
+				    // $mail->addAddress('abrahamahoshakiye@gmail.com');               // Name is optional
+				    $mail->addReplyTo('abrahamahoshakiye@gmail.com', 'RICTA');
+				    $mail->addCC('abrahamahoshakiye@gmail.com');
+				    $mail->addBCC('abrahamahoshakiye@gmail.com');
+
+				    //Attachments
+				    // $mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
+				    // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
+
+				    //Content
+				    $mail->isHTML(true);                                  // Set email format to HTML
+				    $mail->Subject = 'Here is the subject';
+				    $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
+				    // $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+
+				    $mail->send();
+				    echo 'Message has been sent';
+				} catch (Exception $e) {
+				    echo 'Message could not be sent.';
+				    echo 'Mailer Error: ' . $mail->ErrorInfo;
+				}
+
+				*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                 // Always set content-type when sending HTML email
-				$headers = "MIME-Version: 1.0" . "\r\n";
-				$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-				$to = $email;
+                // $from = 'abrahamahoshakiye@gmail.com';
+				// $to = $email;
+				// $headers = "Reply-To: ".($from) . "\r\n";
+				// $headers .= "Return-Path: ".($from) . "\r\n";
+				// $headers .= "From: "  .($from) . "\r\n";
+				// $headers .= "Cc: abrahamahoshakiye@gmail.com" . "\r\n";
+				// $headers .= "Organization: RICTA\r\n";
+				// $headers .= "MIME-Version: 1.0" . "\r\n";
+				// $headers .="Content-type: text/html; charset=iso 8859-1" . "\r\n";
+				// $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+				// $headers .= "X-Priority: 3\r\n";
+				// $headers .= "X-Mailer: PHP". phpversion() ."\r\n";
 
 				// More headers
-				$headers .= 'From: <abrahamahoshakiye@gmail.com>' . "\r\n";
-				$headers .= 'Cc: abrahamahoshakiye@gmail.com' . "\r\n";
 
-				mail($to,$subject,$message_body,$headers);
+				// $headers ="From:<$from>\n";
+				// $headers.="MIME-Version: 1.0\n";
+				// $headers.="Content-type: text/html; charset=iso 8859-1";
+				// $headers .= "X-Priority: 2\nX-MSmail-Priority: high";
 
+				// mail($to,$subject,$message_body,$headers);
+
+			echo '</span>';
 		break;
 		case 'user-update':
 

@@ -1,6 +1,6 @@
 
             <?php
-
+                require_once 'classes/Payment.php';
                 $transaction['status'] = Payment::getInput('vpc_TxnResponseCode');
                 $transaction['key']    = Payment::getInput('vpc_TransactionNo');
                 $transaction['message'] = Payment::getInput('vpc_Message');
