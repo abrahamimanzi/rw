@@ -6,12 +6,12 @@ error_reporting(E_ALL);
 
 // $servername = "localhost";
 // $username = "root";
-// $password = "kd_ricta";
+$password = "kd_ricta";
 // $dbname = "01_ricta_db";
 
 $servername = "localhost";
 $username = "root";
-$password = "";
+// $password = "";
 $dbname = "01_ricta_db";
 
 
@@ -36,7 +36,7 @@ if($_SERVER['HTTP_HOST'] != 'localhost' && $_SERVER['HTTP_HOST'] != '127.0.0.1')
     $http = 'http';
 }
 
-define("DN", "$http://{$_SERVER['HTTP_HOST']}/rw/");
+define("DN", "$http://{$_SERVER['HTTP_HOST']}/");
 define("PL", ".php");
 
 // Load Classes
