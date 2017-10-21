@@ -12,7 +12,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['username']) && !isset($_SES
     exit(); 
 }
 
-echo " session set";
+// echo " session set";
 
 ?>
 
@@ -25,7 +25,7 @@ echo " session set";
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <title>RICTA</title>
     <!-- Favicon-->
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="<?=DN?>images/ricta_logo.png" type="image/x-icon">
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
@@ -60,9 +60,10 @@ echo " session set";
 
     <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
     <link href="<?=DN?>css/themes/all-themes.css" rel="stylesheet" />
+    <link href="<?=DN?>css/themes/theme-blue.css" rel="stylesheet" />
 </head>
 
-<body class="theme-red">
+<body class="theme-blue">
     <!-- Page Loader -->
     <?php include 'view/panel/header.php'; ?>
     <!-- #Top Bar -->
@@ -133,8 +134,8 @@ echo " session set";
 
     <!-- Custom Js -->
     <script src="<?=DN?>js/admin.js"></script>
-    <!-- <script src="<?=DN?>js/pages/index.js"></script>
-    <script src="<?=DN?>js/pages/forms/basic-form-elements.js"></script>-->
+    <script src="<?=DN?>js/pages/index.js"></script>
+    <!-- <script src="<?=DN?>js/pages/forms/basic-form-elements.js"></script>-->
     <script src="<?=DN?>js/pages/tables/jquery-datatable.js"></script>
 
     <!-- Demo Js -->

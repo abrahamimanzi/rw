@@ -1,4 +1,4 @@
-<aside id="leftsidebar" class="sidebar">
+        <aside id="leftsidebar" class="sidebar">
             <!-- User Info -->
             <div class="user-info">
                 <div class="image">
@@ -76,13 +76,19 @@
                             <li>
                                 <a href="index.php?request=users">View Users</a>
                             </li>
+                            <?php
+                                if ($_SESSION["user_groups"] == 'Super-Admin') {
+                            ?>
                             <li>
                                 <a href="index.php?request=newuser">New User</a>
                             </li>
+                            <?php
+                                }
+                            ?>
 
                         </ul>
                     </li>
-                    <li class="header">LABELS</li>
+                    <li class="header">OTHERS LINKS</li>
                     <!-- <li>
                         <a href="index.php?request=pay">
                             <i class="material-icons col-light-blue">donut_large</i>
@@ -97,7 +103,7 @@
                     </li> -->
                     <li>
                         <a href="logout.php">
-                            <i class="material-icons col-red">donut_large</i>
+                            <i class="material-icons col-green">donut_large</i>
                             <span>Log out</span>
                         </a>
                     </li>

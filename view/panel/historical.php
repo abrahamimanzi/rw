@@ -1,10 +1,9 @@
 
         <div class="container-fluid">
             <div class="block-header">
-                <h2>
+                <!-- <h2>
                     JQUERY DATATABLES
-                    <small>Taken from <a href="https://datatables.net/" target="_blank">datatables.net</a></small>
-                </h2>
+                </h2> -->
             </div>
             
             <!-- Exportable Table -->
@@ -13,9 +12,9 @@
                     <div class="card">
                         <div class="header">
                             <h2>
-                                EXPORTABLE TABLE
+                                HISTORICAL
                             </h2>
-                            <ul class="header-dropdown m-r--5">
+                            <!-- <ul class="header-dropdown m-r--5">
                                 <li class="dropdown">
                                     <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                         <i class="material-icons">more_vert</i>
@@ -26,7 +25,7 @@
                                         <li><a href="javascript:void(0);">Something else here</a></li>
                                     </ul>
                                 </li>
-                            </ul>
+                            </ul> -->
                         </div>
                         <div class="body">
                             <div class="table-responsive">
@@ -53,7 +52,13 @@
                                     </tfoot>
                                     <tbody>
                                         <?php
-                                            $sql = "SELECT * FROM payment_receive";
+                                            if ($_SESSION["user_groups"] == 'Super-Admin' OR $_SESSION["user_groups"] == 'View-Admin') {
+                                                $sql = "SELECT * FROM payment_receive ORDER BY `ID` DESC";
+
+                                            } else {
+                                                $user_ID = $_SESSION["user_ID"];
+                                                $sql = "SELECT * FROM payment_receive WHERE `user_ID` = '$user_ID' ORDER BY `ID` DESC";
+                                            }
                                             $result = mysqli_query($conn, $sql);
                                             if (mysqli_num_rows($result) > 0) {
                                                 while($row = mysqli_fetch_assoc($result)) {

@@ -1,10 +1,9 @@
 
         <div class="container-fluid">
             <div class="block-header">
-                <h2>
+                <!-- <h2>
                     JQUERY DATATABLES
-                    <small>Taken from <a href="https://datatables.net/" target="_blank">datatables.net</a></small>
-                </h2>
+                </h2> -->
             </div>
             <!-- Basic Examples -->
             <div class="row clearfix">
@@ -12,9 +11,9 @@
                     <div class="card">
                         <div class="header">
                             <h2>
-                                BASIC EXAMPLE
+                                USERS
                             </h2>
-                            <ul class="header-dropdown m-r--5">
+                            <!-- <ul class="header-dropdown m-r--5">
                                 <li class="dropdown">
                                     <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                         <i class="material-icons">more_vert</i>
@@ -25,7 +24,7 @@
                                         <li><a href="javascript:void(0);">Something else here</a></li>
                                     </ul>
                                 </li>
-                            </ul>
+                            </ul> -->
                         </div>
                         <div class="body">
                             <div class="table-responsive">
@@ -50,7 +49,13 @@
                                     </tfoot>
                                     <tbody>
                                         <?php
-                                            $sql = "SELECT * FROM app_users";
+                                            if ($_SESSION["user_groups"] == 'Super-Admin') {
+                                                $sql = "SELECT * FROM app_users";
+
+                                            } else {
+                                                $user_ID = $_SESSION["user_ID"];
+                                                $sql = "SELECT * FROM app_users WHERE `ID` = '$user_ID'";
+                                            }
                                             $result = mysqli_query($conn, $sql);
                                             if (mysqli_num_rows($result) > 0) {
                                                 while($row = mysqli_fetch_assoc($result)) {

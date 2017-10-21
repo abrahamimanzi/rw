@@ -1,8 +1,8 @@
 <?php
 
 
-                use PHPMailer\PHPMailer\PHPMailer;
-				use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 
 
@@ -30,6 +30,170 @@ if (isset($_POST['request']) && ($_SERVER['REQUEST_METHOD'] == 'POST') && (trim(
 
 		break;
 		case 'resetpassword':
+			$email = mysqli_real_escape_string($conn, $_POST['user-email']);
+			$sql="SELECT * FROM app_users WHERE email='$email'";
+			$result=mysqli_query($conn,$sql);
+			$count=mysqli_num_rows($result);
+			if($count==1){
+				$row = mysqli_fetch_row($result);
+				$user_ID = $row[0];
+				$username = $row[3];
+				$name = $username;
+
+				$salt = mcrypt_create_iv(32);
+				// $salt = mysqli_real_escape_string($salt);
+				// make strong password
+				$length = 6; 
+				$add_dashes = false; 
+				$available_sets = 'luds';
+
+				$sets = array();
+				if(strpos($available_sets, 'l') !== false)
+					$sets[] = 'abcdefghjkmnpqrstuvwxyz';
+				if(strpos($available_sets, 'u') !== false)
+					$sets[] = 'ABCDEFGHJKMNPQRSTUVWXYZ';
+				if(strpos($available_sets, 'd') !== false)
+					$sets[] = '23456789';
+				if(strpos($available_sets, 's') !== false)
+					$sets[] = '#$&';
+				// if(strpos($available_sets, 's') !== false)
+					// $sets[] = '!@#$%&*?';
+				$all = '';
+				$password = '';
+				foreach($sets as $set){
+					$password .= $set[array_rand(str_split($set))];
+					$all .= $set;
+				}
+				$all = str_split($all);
+				for($i = 0; $i < $length - count($sets); $i++){
+					$password .= $all[array_rand($all)];
+				}
+				$password = str_shuffle($password);
+				if(!$add_dashes){
+					$generate_password = $password;
+				}else{
+					$dash_len = floor(sqrt($length));
+					$dash_str = '';
+					while(strlen($password) > $dash_len)
+					{
+						$dash_str .= substr($password, 0, $dash_len) . '-';
+						$password = substr($password, $dash_len);
+					}
+					$dash_str .= $password;
+		            $generate_password = $dash_str;
+				}
+				// End of strong password
+
+				$password = hash('sha256', $generate_password);
+				$default_password = $generate_password;
+
+				$sql = "UPDATE `app_users` SET `password`='$password', `default_password`='$default_password' WHERE `ID`='$user_ID'";
+
+				if (!mysqli_query($conn,$sql)) {
+					die('Error: ' . mysqli_error($conn));
+				}
+				// echo "1 record added";
+
+				echo '<span style="display: none;">';
+
+                $link = DN."login.php";
+
+                $subject = "RICTA: Your password has been changed successfully";
+
+                $messageText_0= 'Dear <b>'.$name.'</b>,';
+
+                // $messageText_1= 'Your account has been successfully created by '.$session_user_data->firstname.' '.$session_user_data->lastname;
+
+                $messageText_1= 'Your account password as a user on the RICTA system has been changed successfully, Here is your new details:';
+
+                // $messageText_2= 'Your default password is: '.$generate_password.' You can easily change it once have logged in.';
+                
+                $messageText_2= '
+                    <b>Your Username:</b> '.$email.'<br>
+                    <b>Your Password:</b> '.$generate_password.'<br>
+                    <b>Link:</b> <a href="'.$link.'">[LINK]</a>
+                ';
+
+                $messageText_3= '<b>Key information:-</b>';
+
+                $messageText_4= 'Change your password immediately<br>
+                Do not share your username and/or password with anyone including your colleagues, family or friends.<br>
+                Should you find that your password has been compromised, send an email immediately 
+                to noc@ricta.org.rw and call RICTA contact + 250 788 424 148. Should you not 
+                reach the contact by phone, please send a message by SMS.';
+
+                $messageText_5= 'Any changes made to any data should be logged and kept for referral.';
+
+
+                $message_body = '
+                    <body>
+                        <div style="padding: 10px; margin-left: 10px; margin-right: 10px">
+
+                            <section>
+                                <p style="margin-bottom: 25px; font-size: 13px;">
+                                    '.$messageText_0.'
+                                </p>
+                                <p style="font-size: 13px;">
+                                    '.$messageText_1.'
+                                </p>
+                                <p style="font-size: 13px;">
+                                     '.$messageText_2.'
+                                </p>
+                                <p style="font-size: 13px;">
+                                     '.$messageText_3.'
+                                </p>
+                                <p style="font-size: 13px;">
+                                     '.$messageText_4.'
+                                </p>
+                                <p style="font-size: 13px;">
+                                     '.$messageText_5.'
+                                </p>
+                            
+                                <p style="font-size: 13px;">
+                                    <b>Stay connected</b> <br>
+                                    <b>Twitter / Facebook:</b> RICTA <br>
+                                    <b>Connect with our official tag:</b> #rw<br>
+                                    <b>Youtube:</b> ricta<br>
+                                </p>
+                                <br>
+                            </section>
+                            <div style="font-size: 13px; padding: 0px; color: #222; position: relative">
+                                <div style="background: #fff;text-align: left; color: #222; border-top: 1px solid #ddd; padding: 10px 5px">
+                                    Regards,<br><br>
+
+                                    RICTA Team<br>
+                                    E:  noc@ricta.org.rw<br>
+                                    T:  + 250 788 424 148<br>
+                                    <a href="'.DN.'/tcs">Terms & Conditions</a> | 
+                                    <a href="'.DN.'/privacy">Privacy Policy</a>
+                                </div>
+                            </div>
+                        </div>
+                    </body>
+                ';
+
+                $message_alt = $messageText_0.' '.$messageText_1.' '.$messageText_2.' '.$messageText_3.' '.$messageText_4.' '.$messageText_5 ;
+
+                $contactDetails['from_email'] = 'abrahamahoshakiye@gmail.com';
+                $contactDetails['from_names'] = 'RICTA';
+                $contactDetails['to_email'] = $email;
+
+                $contactDetails['attach'] = false;
+                require_once 'classes/Functions.php';
+                $email_status = Functions::smartMailer($contactDetails,$subject,$message_body,$message_alt);
+
+				echo '</span>';
+				unset($_SESSION["error_message"]);
+				
+                $_SESSION["error_message"] = "Your password has been changed successfully. 
+                check it on  
+                <span><?=$email?></span> momentarily. <br>Please contact info@ricta.org.rw 
+                if you do not receive email within 12 hours.<br>Check your spam folder too.";
+
+			} else {
+				$_SESSION["error_message"] = "User not found, please send an email immediately 
+                to noc@ricta.org.rw.";
+			}
 
 		break;
 		case 'user_sigggnup':
@@ -37,9 +201,9 @@ if (isset($_POST['request']) && ($_SERVER['REQUEST_METHOD'] == 'POST') && (trim(
 		break;
 		case 'user_login':
 
-			$request =  $_POST['request'];
-			$username =  $_POST['username'];
-			$password = $_POST['password'];
+			$request = mysqli_real_escape_string($conn, $_POST['request']);
+			$username = mysqli_real_escape_string($conn, $_POST['username']);
+			$password = mysqli_real_escape_string($conn, $_POST['password']);
 
 			// $username =  'rg@gmail.com';
 			// $password = '#Cube2017@';
@@ -57,7 +221,7 @@ if (isset($_POST['request']) && ($_SERVER['REQUEST_METHOD'] == 'POST') && (trim(
 				$salt = $row[7];
 				$user_email = $row[8];
 				$phone = $row[9];
-				$user_groups = $row[18];
+				$user_groups = $row[17];
 				// $user_ID = $row[0];
 				// echo $row[5];
 				if ($user_password === hash('sha256', $password)) {
@@ -108,7 +272,7 @@ if (isset($_POST['request']) && ($_SERVER['REQUEST_METHOD'] == 'POST') && (trim(
 			$email = mysqli_real_escape_string($conn, $_POST['email']);
 			$phone = mysqli_real_escape_string($conn, $_POST['phone']);
 			$groups = mysqli_real_escape_string($conn, $_POST['group']);
-			echo $request;
+			// echo $request;
 
 			$salt = mcrypt_create_iv(32);
 			// $salt = mysqli_real_escape_string($salt);
@@ -185,7 +349,7 @@ if (isset($_POST['request']) && ($_SERVER['REQUEST_METHOD'] == 'POST') && (trim(
 
                 $link = DN."login.php";
 
-                $subject = "Your User Account for RICTA has been created";
+                $subject = "RICTA: Your User Account has been created";
 
                 $messageText_0= 'Dear <b>'.$name.'</b>,';
 

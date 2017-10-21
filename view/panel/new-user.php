@@ -1,7 +1,7 @@
 
         <div class="container-fluid">
             <div class="block-header">
-                <h2>FORM EXAMPLES</h2>
+                <!-- <h2>FORM EXAMPLES</h2> -->
             </div>
 
             <!-- Vertical Layout -->
@@ -10,9 +10,9 @@
                     <div class="card">
                         <div class="header">
                             <h2>
-                                VERTICAL LAYOUT
+                                NEW USER
                             </h2>
-                            <ul class="header-dropdown m-r--5">
+                            <!-- <ul class="header-dropdown m-r--5">
                                 <li class="dropdown">
                                     <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                         <i class="material-icons">more_vert</i>
@@ -23,7 +23,7 @@
                                         <li><a href="javascript:void(0);">Something else here</a></li>
                                     </ul>
                                 </li>
-                            </ul>
+                            </ul> -->
                         </div>
                         <div class="body">
                             <form id="form_advanced_validation" method="POST" novalidate="novalidate">

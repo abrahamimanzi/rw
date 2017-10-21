@@ -66,10 +66,12 @@
                 // echo $vpc_VerStatus;
                 // echo $vpc_VerType;
                 // echo $vpc_Version;
-
-                $user_ID = 24;
-                $registrar = 'Abraham';
-                $email = 'abrahamahoshakiye@gmail.com';
+                if ($vpc_Currency != 'RWF') {
+                    $vpc_Amount = $vpc_Amount/100;
+                }
+                $user_ID = $_SESSION["user_ID"];
+                $registrar = $_SESSION["username"];
+                $email = $_SESSION["user_email"];
                 $payment_rn = $user_ID;
                 // $seconds = \Config::get('time/seconds');
                 $seconds = date("Y-m-d");
@@ -84,6 +86,81 @@
                             die('Error: ' . mysqli_error($conn));
                         }
 
+                        echo '<span style="display: none;">';
+
+                        $subject= 'Receipt: RICTA Payment';
+        
+                        $currency = $vpc_Currency;
+
+                        $messageText_0= 'Dear <b>'.$registrar.'</b>,';
+
+                        $messageText_1= 'Your payment has been successfully processed.';
+                        
+
+                        $messageText_2= 'Your Payment details are:';
+
+                        $messageText_3= 'Kindly email us on noc@rict.org.rw, if you have not received your receipt.';
+
+
+
+                        $message_body = '
+                            <body>
+                                <div style="padding: 10px; margin-left: 10px margin-right: 10px">
+
+                                    <section>
+                                        <p style="margin-bottom: 25px; font-size: 13px;">
+                                            '.$messageText_0.'
+                                        </p>
+                                        <p style="font-size: 13px;">
+                                            '.$messageText_1.'
+                                        </p>
+                                        <p style="font-size: 13px;">
+                                             '.$messageText_2.'
+                                        </p>
+
+                                        <p style="font-size: 13px;">
+                                            User ID: '.$user_ID.'<br>
+                                            Names: '.$registrar.'<br>
+                                            Price: '.$currency.' '.$vpc_Amount.'<br>
+                                            Payment Receipt: <a href="'.DN.'receipt.php?id='.$payment_log_token.'"> [Click here to view your Receipt]</a>
+                                        </p>
+                                        <p style="font-size: 13px;">
+                                             '.$messageText_3.'
+                                        </p>
+                                        <p style="font-size: 13px;">
+                                            <b>Stay connected</b> <br>
+                                            <b>Twitter / Facebook:</b> RICTA <br>
+                                            <b>Connect with our official tag:</b> #rw<br>
+                                            <b>Youtube:</b> ricta<br>
+                                        </p>
+                                        <br>
+                                    </section>
+                                    <div style="font-size: 13px; padding: 0px; color: #222; position: relative">
+                                        <div style="background: #fff;text-align: left; color: #222; border-top: 1px solid #ddd; padding: 10px 5px">
+                                            Regards,<br><br>
+
+                                            RICTA Team<br>
+                                            E:  noc@ricta.org.rw<br>
+                                            T:  + 250 788 424 148<br>
+                                            <a href="'.DN.'/tcs">Terms & Conditions</a> | 
+                                            <a href="'.DN.'/privacy">Privacy Policy</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </body>
+                        ';
+
+                        $message_alt = $messageText_0.' '.$messageText_1.' '.$messageText_2.' '.$messageText_3;
+
+                        $contactDetails['from_email'] = 'abrahamahoshakiye@gmail.com';
+                        $contactDetails['from_names'] = 'RICTA';
+                        $contactDetails['to_email'] = $email;
+
+                        $contactDetails['attach'] = false;
+                        require_once 'classes/Functions.php';
+                        $email_status = Functions::smartMailer($contactDetails,$subject,$message_body,$message_alt);
+
+                        echo '</span>';
                         /*
                         $participant_code = Input::get('id','get');
                         $discount = 0;
@@ -152,13 +229,13 @@
                         // include 'views/register/success.php';
                         ?>
 
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
                             <div class="card">
-                                <div class="header bg-amber">
+                                <div class="header bg-green">
                                     <h2>
                                         Payment successful
                                     </h2>
-                                    <ul class="header-dropdown m-r--5">
+                                    <!-- <ul class="header-dropdown m-r--5">
                                         <li>
                                             <a href="javascript:void(0);" data-toggle="cardloading" data-loading-effect="pulse" data-loading-color="amber">
                                                 <i class="material-icons">loop</i>
@@ -174,10 +251,13 @@
                                                 <li><a href="javascript:void(0);" class=" waves-effect waves-block">Something else here</a></li>
                                             </ul>
                                         </li>
-                                    </ul>
+                                    </ul> -->
                                 </div>
                                 <div class="body">
-                                    The transaction was completed successfully. Your payment confirmation and receipt will be sent to <span><?=$email?></span> momentarily. Please contact info@ricta.org.rw if you do not receive your  email within 12 hours.<br>Check your spam folder too.
+                                    The transaction was completed successfully. Your payment confirmation and receipt will be sent to <span><?=$email?></span> momentarily. <br>Please contact info@ricta.org.rw if you do not receive your  email within 12 hours.<br>Check your spam folder too.
+                                </div>
+                                <div class="header bg-blue-grey">
+                                    <a href="<?=DN?>receipt.php?id=<?=$payment_log_token?>" class="btn btn-info waves-effect">RECEIPT</a>
                                 </div>
                             </div>
                         </div>
@@ -265,7 +345,7 @@
                                         <h2>
                                             Payment cancelled
                                         </h2>
-                                        <ul class="header-dropdown m-r--5">
+                                        <!-- <ul class="header-dropdown m-r--5">
                                             <li>
                                                 <a href="javascript:void(0);" data-toggle="cardloading" data-loading-effect="pulse" data-loading-color="amber">
                                                     <i class="material-icons">loop</i>
@@ -281,7 +361,7 @@
                                                     <li><a href="javascript:void(0);" class=" waves-effect waves-block">Something else here</a></li>
                                                 </ul>
                                             </li>
-                                        </ul>
+                                        </ul> -->
                                     </div>
                                     <div class="body">
                                         You seem to have cancelled your payment. 
@@ -301,7 +381,7 @@
                                         <h2>
                                             Payment decline
                                         </h2>
-                                        <ul class="header-dropdown m-r--5">
+                                        <!-- <ul class="header-dropdown m-r--5">
                                             <li>
                                                 <a href="javascript:void(0);" data-toggle="cardloading" data-loading-effect="pulse" data-loading-color="amber">
                                                     <i class="material-icons">loop</i>
@@ -317,7 +397,7 @@
                                                     <li><a href="javascript:void(0);" class=" waves-effect waves-block">Something else here</a></li>
                                                 </ul>
                                             </li>
-                                        </ul>
+                                        </ul> -->
                                     </div>
                                     <div class="body">
                                         You seem to entered an incorrect card details, please try again.
@@ -335,7 +415,7 @@
                                         <h2>
                                             Payment decline
                                         </h2>
-                                        <ul class="header-dropdown m-r--5">
+                                        <!-- <ul class="header-dropdown m-r--5">
                                             <li>
                                                 <a href="javascript:void(0);" data-toggle="cardloading" data-loading-effect="pulse" data-loading-color="amber">
                                                     <i class="material-icons">loop</i>
@@ -351,7 +431,7 @@
                                                     <li><a href="javascript:void(0);" class=" waves-effect waves-block">Something else here</a></li>
                                                 </ul>
                                             </li>
-                                        </ul>
+                                        </ul> -->
                                     </div>
                                     <div class="body">
                                         You seem to have cancelled your payment.
