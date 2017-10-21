@@ -257,7 +257,7 @@
                                     The transaction was completed successfully. Your payment confirmation and receipt will be sent to <span><?=$email?></span> momentarily. <br>Please contact info@ricta.org.rw if you do not receive your  email within 12 hours.<br>Check your spam folder too.
                                 </div>
                                 <div class="header bg-blue-grey">
-                                    <a href="<?=DN?>receipt.php?id=<?=$payment_log_token?>" class="btn btn-info waves-effect">RECEIPT</a>
+                                    <a href="<?=DN?>receipt.php?id=<?=$payment_log_token?>" target="_blank" class="btn btn-info waves-effect">RECEIPT</a>
                                 </div>
                             </div>
                         </div>

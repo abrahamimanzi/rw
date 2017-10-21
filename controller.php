@@ -551,7 +551,8 @@ if (isset($_POST['request']) && ($_SERVER['REQUEST_METHOD'] == 'POST') && (trim(
 	            
 	            // $amount = 1;
 	            // $currency = 'USD';
-	            $orderInfo = 'ORDER34525';
+	            $orderInfo = 'ORDER34525'.(Payment::generateMerchTxnRef()).$admin_ID;
+                $MerchTxnRef = $orderInfo.'-'.(Payment::generateMerchTxnRef()); // See functions.php file
 
 
 	            // active
@@ -588,7 +589,7 @@ if (isset($_POST['request']) && ($_SERVER['REQUEST_METHOD'] == 'POST') && (trim(
 	                'vpc_Amount' => ($amount * $mult), // Multiplying by 100 to convert to the smallest unit
 	                'vpc_OrderInfo' => $orderInfo,
 
-	                'vpc_MerchTxnRef' => Payment::generateMerchTxnRef(), // See functions.php file
+	                'vpc_MerchTxnRef' => $MerchTxnRef, // See functions.php file
 
 	                'vpc_Command' => 'pay',
 	                'vpc_Currency' => $currency,
