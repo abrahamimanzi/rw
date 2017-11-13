@@ -497,7 +497,8 @@ class Payment
             $migsUrl = 'https://migs.mastercard.com.au/vpcpay?'.http_build_query($queryData);
 
             // Redirect to the bank website to continue the 
-            header("Location: " . $migsUrl);
+            print($migsUrl);
+            // header("Location: " . $migsUrl);
         }
         
     }

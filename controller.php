@@ -607,6 +607,7 @@ if (isset($_POST['request']) && ($_SERVER['REQUEST_METHOD'] == 'POST') && (trim(
 	            $migsUrl = 'https://migs.mastercard.com.au/vpcpay?'.http_build_query($queryData);
 
 	            // Redirect to the bank website to continue the 
+	            // print($migsUrl);
 	            header("Location: " . $migsUrl);
 	        
         break;

@@ -10,7 +10,7 @@
                     <div class="card">
                         <div class="header">
                             <h2>
-                                MAKE PAYMENT
+                                We accept <img src="images/card.png" alt="visa card / mastercard" style="width: 20%;">
                             </h2>
                             <!-- <ul class="header-dropdown m-r--5">
                                 <li class="dropdown">
