@@ -4,15 +4,15 @@ ob_start();
 session_start();
 error_reporting(E_ALL);
 
-// $servername = "localhost";
-// $username = "root";
-// $password = "kd_ricta";
-// $dbname = "01_ricta_db";
-
 $servername = "localhost";
 $username = "root";
-$password = "";
+$password = "kd_ricta";
 $dbname = "01_ricta_db";
+
+// $servername = "localhost";
+// $username = "root";
+// $password = "";
+// $dbname = "01_ricta_db";
 
 
 // Create connection
