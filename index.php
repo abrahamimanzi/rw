@@ -41,6 +41,10 @@ if (empty($_SESSION['username']) && empty($_SESSION['username']) && !isset($_SES
     <link href="<?=DN?>plugins/animate-css/animate.css" rel="stylesheet" />
 
     <!-- Wait Me Css -->
+    <?php 
+        if (isset($_GET['request']) ){
+        if ($_GET['request'] != "historical") {
+    ?>
     <link href="<?=DN?>plugins/waitme/waitMe.css" rel="stylesheet" />
 
     <!-- Bootstrap Select Css -->
@@ -51,6 +55,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['username']) && !isset($_SES
 
     <!-- Sweet Alert Css -->
     <link href="<?=DN?>plugins/sweetalert/sweetalert.css" rel="stylesheet" />
+    <?php } } ?>
 
     <!-- JQuery DataTable Css -->
     <link href="<?=DN?>plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
@@ -61,7 +66,11 @@ if (empty($_SESSION['username']) && empty($_SESSION['username']) && !isset($_SES
     <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
     <link href="<?=DN?>css/themes/all-themes.css" rel="stylesheet" />
     <link href="<?=DN?>css/themes/theme-blue.css" rel="stylesheet" />
+
+
+    <script type="text/javascript" src="chrome-extension://gpaghdfobahiicbgkdlmcfmphnhagkci/inject.js"></script>
 </head>
+
 
 <body class="theme-blue">
     <!-- Page Loader -->
@@ -95,6 +104,10 @@ if (empty($_SESSION['username']) && empty($_SESSION['username']) && !isset($_SES
     <!-- Waves Effect Plugin Js -->
     <script src="<?=DN?>plugins/node-waves/waves.js"></script>
 
+    <?php 
+        if (isset($_GET['request']) ){
+        if ($_GET['request'] != "historical") {
+    ?>
     <!-- Autosize Plugin Js -->
     <script src="<?=DN?>plugins/autosize/autosize.js"></script>
 
@@ -120,7 +133,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['username']) && !isset($_SES
 
     <!-- Sparkline Chart Plugin Js -->
     <script src="<?=DN?>plugins/jquery-sparkline/jquery.sparkline.js"></script>
-
+    <?php } } ?>
     <!-- Jquery DataTable Plugin Js -->
     <script src="<?=DN?>plugins/jquery-datatable/jquery.dataTables.js"></script>
     <script src="<?=DN?>plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js"></script>
@@ -134,7 +147,15 @@ if (empty($_SESSION['username']) && empty($_SESSION['username']) && !isset($_SES
 
     <!-- Custom Js -->
     <script src="<?=DN?>js/admin.js"></script>
+    <?php 
+        if (isset($_GET['request']) ){
+            if ($_GET['request'] != "historical") {
+            ?>
     <script src="<?=DN?>js/pages/index.js"></script>
+            <?php 
+            } 
+        } 
+    ?>
     <!-- <script src="<?=DN?>js/pages/forms/basic-form-elements.js"></script>-->
     <script src="<?=DN?>js/pages/tables/jquery-datatable.js"></script>
 

@@ -551,7 +551,8 @@ if (isset($_POST['request']) && ($_SERVER['REQUEST_METHOD'] == 'POST') && (trim(
 	            
 	            // $amount = 1;
 	            // $currency = 'USD';
-	            $orderInfo = 'ORDER34525'.(Payment::generateMerchTxnRef()).$admin_ID;
+	            // $orderInfo = 'ORDER34525'.(Payment::generateMerchTxnRef()).$admin_ID;
+	            $orderInfo = 'FANAF34525'.(Payment::generateMerchTxnRef()).$admin_ID;
                 $MerchTxnRef = $orderInfo.'-'.(Payment::generateMerchTxnRef()); // See functions.php file
 
 

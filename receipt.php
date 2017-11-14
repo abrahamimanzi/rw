@@ -240,7 +240,7 @@ require('classes/Dates.php');
         
         $item_number = 1;
 
-        $item= 'Reacherge account';
+        $item= '.rw Registry account recharge';
         $reg_code = $user_ID;
         $unit_price = $currency.' '.number_format($amount);
         $total = $currency.' '.number_format($amount);

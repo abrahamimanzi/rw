@@ -38,6 +38,7 @@
                                             <th>card issue</th>
                                             <th>payment state</th>
                                             <th>date</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -48,6 +49,7 @@
                                             <th>card issue</th>
                                             <th>payment state</th>
                                             <th>date</th>
+                                            <th>Action</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
@@ -71,6 +73,11 @@
                                                         <td><?=$row["card_issue"];?> <?=$row["card_number"];?></td>
                                                         <td><?=$row["payment_state"];?></td>
                                                         <td><?=$row["payment_date"];?></td>
+                                                        <td>
+                                                            <?php if ($row["receipt_number"]!="") { ?>
+                                                            <a href="<?=DN?>receipt.php?id=<?=$row["token"];?>" target="_blank" class="btn btn-info waves-effect">RECEIPT</a>
+                                                            <?php } ?>
+                                                        </td>
                                                     </tr>
                                                     <?php
                                                 }
